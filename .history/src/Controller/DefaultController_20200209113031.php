@@ -6,10 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Services\GiftsService;
-use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractController
 {
+    public function __construct(GiftsService $gifts)
+    {
+        $gifts->gifts = ['a', 'b', 'c', 'd']
+    }
+
 
     /**
      * @Route("/", name="default")
@@ -24,14 +28,6 @@ class DefaultController extends AbstractController
             'users' => $users,
             'random_gift' => $gifts -> gifts
         ]);
-    }
-
-    /**
-     * @Route("/blog/{page}", name="blog_list" requirements={"page"="\d+"})
-     */
-    public function index2()
-    {
-        return new Response('Optional parameters in url and requirements for parameters.');
     }
 
 }

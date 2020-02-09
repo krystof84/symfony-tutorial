@@ -27,7 +27,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/blog/{page}", name="blog_list" requirements={"page"="\d+"})
+     * @Route("/blog/{page}", name="blog_list" requirements={"pane"="\d+"})
      */
     public function index2()
     {

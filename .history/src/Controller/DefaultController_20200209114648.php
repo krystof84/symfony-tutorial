@@ -31,7 +31,7 @@ class DefaultController extends AbstractController
      */
     public function index2()
     {
-        return new Response('Optional parameters in url and requirements for parameters.');
+        // return new Response('Optional parameters in url and requirements for parameters.');
     }
 
 }
