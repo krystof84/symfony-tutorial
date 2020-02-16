@@ -45,6 +45,7 @@ class DefaultController extends AbstractController
      *      }
      * )
      */
+
      public function index3()
      {
          return new Response('An a advanced route example');
@@ -53,10 +54,11 @@ class DefaultController extends AbstractController
      /**
       * @Route({
       *     "nl": "/over-ons", 
-      *     "en": "/about-us"
+      *     "en: "/about-us"
       *
       *}, name="about_us")
       */
+
       public function index4() 
       {
         return new Response('Translated routes');
