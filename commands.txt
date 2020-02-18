@@ -29,4 +29,10 @@ bin/console make:migration
 bin/console doctrine:migrations:migrate
 
 
+-----------------------------------------------------------------
+
+Czyszczenie cache
+
+php bin/console cache:clear
+
 
