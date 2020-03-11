@@ -35,4 +35,14 @@ Czyszczenie cache
 
 php bin/console cache:clear
 
+-----------------------------------------------------------------
 
+Instalacja komponentu asset
+
+composer require symfony/asset
+
+-----------------------------------------------------------------
+
+Przebudowa bazy danych. Usunięcie starej bazy danych i wygenerowanie nowej
+
+php bin/console doctrine:schema:drop -n -q --force --full-database && rm src/Migrations/*.php && php bin/console make:migration && php bin/console doctrine:migrations:migrate

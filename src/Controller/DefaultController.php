@@ -2,15 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Address;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
-use App\Services\GiftsService;
+use App\Entity\Video;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class DefaultController extends AbstractController
@@ -22,65 +20,38 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/", name="default")
+     * @Route("/", name="default", name="home")
      */
-    public function index(GiftsService $gifts, Request $request, SessionInterface $session)
+    public function index(Request $request)
     {
-        // $users = [];
 
-        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $entityManager = $this -> getDoctrine() -> getManager();
 
-        if(!$users)
-        {
-            throw $this->createNotFoundException('The users do not exists');
-        }
+//        $user = new User();
+//        $user->setName('Robert');
+//
+//        for($i=1; $i<=3; $i++)
+//        {
+//            $video = new Video();
+//            $video->setTitle('Video tile' . $i);
+//            $user->addVideo($video);
+//            $entityManager->persist($video);
+//        }
+//
+//        $entityManager->persist($user);
+//        $entityManager->flush();
 
-        // exit($request->query->get('page', 'default'));
-//        exit($request->server->get('HTTP_HOST'));
 
-        // exit($request->cookies->get('PHPSESSID'));
+        $user = $entityManager->getRepository(User::class)->findWithVideos(1);
 
-        // Sessions
-        $session->set('name', 'session value');
-        $session->remove('name');
-        $session->clear();
-        if($session->has('name'))
-        {
-            exit($session->get('name'));
-        }
-
-        // Create cookie
-        $cookie = new Cookie(
-            'my_cookie',
-            'cookie value',
-            time() + (2 * 365 * 24 * 60 * 60)
-        );
-        $res = new Response();
-        $res->headers->setCookie( $cookie );
-        $res->send();
-
-        // Clear cookie 
-        $res = new Response();
-        $res->headers->clearCookie('my_cookie');
-
-        // Flash messages
-        $this->addFlash(
-            'notice',
-            'Your changes were saved'
-        );
-
-        $this->addFlash(
-            'warning',
-            'Your changes were saved'
-        );
-
+        dump($user);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'users' => $users,
-            'random_gift' => $gifts -> gifts
+//            'users' => $user1->getFollowing()->count()
         ]);
     }
+
 
     /**
      * @Route("/blog/{page?}", name="blog_list", requirements={"page"="\d+"})
